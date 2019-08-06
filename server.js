@@ -1,13 +1,23 @@
 const express = require('express');
-
+const connectDB  = require('./config/db');
 
 
 const app = express();
+
+// Connect Database
+connectDB();
 
 app.get('/',(req,res)=> {
   res.send('API Running');
 })
 
+
+//Define route
+
+app.use('/api/users',require('./route/api/users'))
+app.use('/api/auth',require('./route/api/auth'))
+app.use('/api/profile',require('./route/api/profile'))
+app.use('/api/posts',require('./route/api/posts'))
 
 
 
