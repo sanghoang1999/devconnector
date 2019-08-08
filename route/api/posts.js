@@ -103,6 +103,7 @@ router.delete('/:post_id',auth,async(req,res)=> {
 
 router.put('/like/:id',auth,async (req,res) => {
   try {
+    
     const post = await Post.findById(req.params.id);
     console.log(post);
     //check if the post has already been liked
@@ -140,6 +141,75 @@ router.put('/unlike/:id',auth,async (req,res) => {
 
   } catch (error) {
     console.log(error);
+    res.status(500).json('Server Error');
+  }
+})
+
+
+// @route    PUSH api/posts/comment/:id
+// @desc     Push comment to post
+// @access   Private
+
+router.put('/comment/:id',[auth,[
+  check('text','Text is required').not().isEmpty(),
+]],async (req,res) => {
+  try {
+    const errors = validationResult(req);
+    if(!errors.isEmpty) {
+      return res.status(400).json({errors:errors.array()})
+    }
+    const post = await Post.findById(req.params.id).populate('user',['name','avatar']);
+    //check if the post has already been liked
+    const newPost = {
+      user:req.user.id,
+      text:req.body.text,
+      name:post.user.name,
+      avatar:post.user.avatar,
+    }
+    post.comments.unshift(newPost);
+    await post.save();
+    res.json(post);
+
+  } catch (error) {
+    console.log(error);
+    if(error.kind==='ObjectId') {
+      return res.status(400).json({msg:"Post not found"})
+    }
+    res.status(500).json('Server Error');
+  }
+})
+
+// @route    DELETE api/posts/:post_id/comment/:comment_id
+// @desc     remove comment to a post
+// @access   Private
+
+router.delete('/:post_id/comment/:comment_id',auth,async (req,res) => {
+  try {
+    const post = await Post.findById(req.params.post_id);
+    //pull out comment
+    const comment = await post.comments.find(cmt => cmt.id===req.params.comment_id);
+
+    if(!comment) {
+      return res.status(400).json({msg:"Comment not found"});
+    }
+    //check user 
+
+    if(comment.user.toString() !== req.user.id) {
+      return res.status(401).json({msg:"User not authorized"});
+    }
+    //Get remove index
+    const indexToDel = post.comments.map(item => item.user).indexOf(req.params.comment_id);
+
+    post.comments.splice(indexToDel,1);
+    
+    await post.save();
+    res.json({msg:"remove comment successfully"});
+
+  } catch (error) {
+    console.log(error);
+    if(error.kind==='ObjectId') {
+      return res.status(400).json({msg:"Post not found"})
+    }
     res.status(500).json('Server Error');
   }
 })
