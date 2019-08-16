@@ -12,6 +12,7 @@ const bcrypt = require('bcryptjs');
 router.get('/',auth, async (req,res)=> {
   try{
     const user = await User.findById(req.user.id).select('-password');
+    console.log(user);
     res.json(user);
   }
   catch(err) {
