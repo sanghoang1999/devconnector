@@ -4,12 +4,15 @@ import axios from "axios";
 import { connect } from "react-redux";
 import { login } from "../../actions/auth";
 import PropTypes from "prop-types";
+import Spinner from "../layout/Spinner";
+import SubmitButton from "../layout/SubmitButton";
 
 const Login = ({ login, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     email: "",
     password: ""
   });
+  const [submited, setSubmited] = useState(false);
   if (localStorage.getItem("token")) {
     return <Redirect to="/dashboard" />;
   }
@@ -20,7 +23,10 @@ const Login = ({ login, isAuthenticated }) => {
   };
   const onSubmit = async e => {
     e.preventDefault();
-    login({ email, password });
+    setSubmited(true);
+    login({ email, password }).then(() => {
+      setSubmited(false);
+    });
   };
   return (
     <Fragment>
@@ -53,11 +59,14 @@ const Login = ({ login, isAuthenticated }) => {
             placeholder="Name"
           />
         </div>
-        <input type="submit" value="Login" className="btn btn-primary " />
+        <SubmitButton submited={submited} />
       </form>
       <p className="my-1">
         Don't have an account?
-        <Link to="/register"> Sign up</Link>
+        <Link to="/register" disabled={submited ? "disabled" : ""}>
+          {" "}
+          Sign up
+        </Link>
       </p>
     </Fragment>
   );

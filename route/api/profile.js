@@ -3,6 +3,7 @@ const router = express.Router();
 const auth = require("../../middleware/auth");
 const Profile = require("../../modules/Profile");
 const User = require("../../modules/User");
+const Post = require("../../modules/Post");
 const { check, validationResult } = require("express-validator");
 const request = require("request");
 const config = require("config");
@@ -154,13 +155,15 @@ router.delete("/", auth, async (req, res) => {
   try {
     //@todo - remove users posts
 
+    //Remove user Post
+    await Post.deleteMany({ user: req.user.id });
+
     //Remove profile
     await Profile.findOneAndRemove({ user: req.user.id });
     //Remove user
     await User.findOneAndRemove({ _id: req.user.id });
 
     res.json({ msg: "User deleted" });
-    res.json();
   } catch (error) {
     console.log(error);
     res.status(500).json("Server Error");
@@ -302,8 +305,8 @@ router.put(
   }
 );
 
-// @route    DELETE api/profile/experience/:exp_id
-// @desc     DELETE profile experience by exp ID
+// @route    DELETE api/profile/education/:exp_id
+// @desc     DELETE profile education by exp ID
 // @access   Private
 
 router.delete("/education/:edu_id", auth, async (req, res) => {

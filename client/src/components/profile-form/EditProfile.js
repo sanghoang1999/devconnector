@@ -3,12 +3,14 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { createProfile, getCurrentProfile } from "../../actions/profile";
 import PropTypes from "prop-types";
+import SubmitButton from "../layout/SubmitButton";
 
 const EditProfile = ({
   createProfile,
   getCurrentProfile,
   profile: { profile, loading },
-  history
+  history,
+  alert
 }) => {
   const [formData, setFormData] = useState({
     company: "",
@@ -25,8 +27,11 @@ const EditProfile = ({
     instagram: ""
   });
   const [displaySocialInput, toggleSocialInput] = useState(false);
+  const [submited, setSubmited] = useState(false);
+  console.log(alert.length > 0);
+
   useEffect(() => {
-    getCurrentProfile();
+    //getCurrentProfile();
     setFormData({
       company: loading || !profile.company ? "" : profile.company,
       website: loading || !profile.website ? "" : profile.website,
@@ -63,7 +68,10 @@ const EditProfile = ({
   };
   const onSubmit = e => {
     e.preventDefault();
-    createProfile(formData, history, true);
+    createProfile(formData, history, true).then(() => {
+      setSubmited(false);
+    });
+    setSubmited(true);
   };
   return (
     <Fragment>
@@ -227,7 +235,7 @@ const EditProfile = ({
           </Fragment>
         )}
 
-        <input type="submit" className="btn btn-primary my-1" value="Submit" />
+        <SubmitButton submited={submited} />
         <Link className="btn btn-light my-1" to="/dashboard">
           Go Back
         </Link>
@@ -243,7 +251,8 @@ EditProfile.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  profile: state.profile
+  profile: state.profile,
+  alert: state.alert
 });
 
 export default connect(

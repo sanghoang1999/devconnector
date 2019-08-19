@@ -2,7 +2,8 @@ import {
   PROFILE_ERROR,
   GET_PROFILE,
   CLEAR_PROFILE,
-  UPDATE_PROFILE
+  UPDATE_PROFILE,
+  ACCOUNT_DELETED
 } from "../actions/types";
 
 const initialState = {

@@ -104,7 +104,7 @@ const AddExperience = ({ addExperience, history }) => {
           />
         </div>
         <input type="submit" className="btn btn-primary my-1" value="Submit" />
-        <Link className="btn my-1" href="dashboard.html">
+        <Link className="btn my-1" to="/dashboard">
           Go Back
         </Link>
       </form>
