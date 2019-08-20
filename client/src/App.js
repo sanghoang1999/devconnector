@@ -1,4 +1,4 @@
-import React, { Fragment, Component, useEffect } from "react";
+import React, { Fragment, useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import "./App.css";
@@ -13,6 +13,8 @@ import PrivateRoute from "./components/routing/PrivateRoute";
 import CreateProfile from "./components/profile-form/CreateProfile";
 import EditProfile from "./components/profile-form/EditProfile";
 import AddExperience from "./components/profile-form/AddExperience";
+import Profiles from "./components/profiles/Profiles";
+import Profile from "./components/profiles/Profile";
 //Redux
 import { Provider } from "react-redux";
 import store from "./store";
@@ -24,7 +26,9 @@ if (localStorage.getItem("token")) {
 }
 function App() {
   useEffect(() => {
-    store.dispatch(loadUser());
+    if (localStorage.getItem("token")) {
+      store.dispatch(loadUser());
+    }
   }, []);
   return (
     <Provider store={store}>
@@ -37,6 +41,8 @@ function App() {
             <Switch>
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
+              <Route exact path="/profiles" component={Profiles} />
+              <Route exact path="/profile/:user_id" component={Profile} />
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
               <PrivateRoute
                 exact

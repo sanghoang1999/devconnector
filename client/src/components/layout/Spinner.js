@@ -1,5 +1,4 @@
 import React, { Fragment } from "react";
-import PropTypes from "prop-types";
 import spinner from "./spinner.gif";
 const Spinner = ({ width, display, margin }) => {
   return (

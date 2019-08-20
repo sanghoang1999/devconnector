@@ -17,14 +17,18 @@ import setAuthToken from "../utils/setAuthToken";
 export const loadUser = () => async dispatch => {
   if (localStorage.getItem("token")) {
     setAuthToken(localStorage.getItem("token"));
-  }
-  try {
-    const res = await axios.get("/api/auth");
-    dispatch({
-      type: USER_LOADED,
-      payload: res.data
-    });
-  } catch (error) {
+    try {
+      const res = await axios.get("/api/auth");
+      dispatch({
+        type: USER_LOADED,
+        payload: res.data
+      });
+    } catch (error) {
+      dispatch({
+        type: AUTH_ERROR
+      });
+    }
+  } else {
     dispatch({
       type: AUTH_ERROR
     });
@@ -74,6 +78,7 @@ export const login = ({ email, password }) => async dispatch => {
       payload: res.data
     });
     dispatch(loadUser());
+    return res;
   } catch (error) {
     dispatch(loadUser());
     const errors = error.response.data.errors;
@@ -89,6 +94,7 @@ export const login = ({ email, password }) => async dispatch => {
 //Logout / Clear Profile
 
 export const logout = () => dispatch => {
+  localStorage.removeItem("token");
   dispatch({ type: CLEAR_PROFILE });
   dispatch({ type: LOGOUT });
 };

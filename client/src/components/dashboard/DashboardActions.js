@@ -1,6 +1,5 @@
 import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
-import PropTypes from "prop-types";
 
 const DashboardActions = props => {
   return (
@@ -23,7 +22,5 @@ const DashboardActions = props => {
     </Fragment>
   );
 };
-
-DashboardActions.propTypes = {};
 
 export default DashboardActions;

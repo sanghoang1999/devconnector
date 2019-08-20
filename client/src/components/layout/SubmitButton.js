@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import Spinner from "./Spinner";
 import PropTypes from "prop-types";
 
@@ -21,6 +21,8 @@ const SubmitButton = ({ submited }) => {
   );
 };
 
-SubmitButton.propTypes = {};
+SubmitButton.propTypes = {
+  submited: PropTypes.bool.isRequired
+};
 
 export default SubmitButton;
