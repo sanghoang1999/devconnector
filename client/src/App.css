@@ -542,8 +542,8 @@ img {
   border-bottom: #ccc 1px dotted;
 }
 
-.profile-grid .profile-exp:last-child,
-.profile-grid .profile-edu:last-child {
+.profile-grid .profile-exp > div:last-child,
+.profile-grid .profile-edu > div:last-child {
   border: none;
 }
 

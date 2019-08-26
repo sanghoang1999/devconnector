@@ -4,7 +4,8 @@ import {
   CLEAR_PROFILE,
   UPDATE_PROFILE,
   GET_PROFILES,
-  GET_REPOS
+  GET_REPOS,
+  CLEAR_REPOS
 } from "../actions/types";
 
 const initialState = {
@@ -61,6 +62,13 @@ export default function(state = initialState, action) {
         ...state,
         loading: false,
         repos: payload
+      };
+    }
+    case CLEAR_REPOS: {
+      return {
+        ...state,
+        loading: true,
+        repos: []
       };
     }
     default:

@@ -9,8 +9,7 @@ const EditProfile = ({
   createProfile,
   getCurrentProfile,
   profile: { profile, loading },
-  history,
-  alert
+  history
 }) => {
   const [formData, setFormData] = useState({
     company: "",
@@ -28,10 +27,9 @@ const EditProfile = ({
   });
   const [displaySocialInput, toggleSocialInput] = useState(false);
   const [submited, setSubmited] = useState(false);
-  console.log(alert.length > 0);
-
   useEffect(() => {
-    //getCurrentProfile();
+    console.log(loading);
+    getCurrentProfile();
     setFormData({
       company: loading || !profile.company ? "" : profile.company,
       website: loading || !profile.website ? "" : profile.website,
@@ -47,7 +45,7 @@ const EditProfile = ({
       linkedin: loading || !profile.social ? "" : profile.social.linkedin,
       instagram: loading || !profile.social ? "" : profile.social.instagram
     });
-  }, [setFormData]);
+  }, [loading]);
   const {
     company,
     website,
@@ -72,6 +70,10 @@ const EditProfile = ({
       setSubmited(false);
     });
     setSubmited(true);
+  };
+  const handleGoBack = e => {
+    e.preventDefault();
+    history.goBack();
   };
   return (
     <Fragment>
@@ -235,8 +237,12 @@ const EditProfile = ({
           </Fragment>
         )}
 
-        <SubmitButton submited={submited} />
-        <Link className="btn btn-light my-1" to="/dashboard">
+        <SubmitButton name="Submit " submited={submited} />
+        <Link
+          className="btn btn-light my-1"
+          to="/dashboard"
+          onClick={e => handleGoBack(e)}
+        >
           Go Back
         </Link>
       </form>
@@ -251,8 +257,7 @@ EditProfile.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  profile: state.profile,
-  alert: state.alert
+  profile: state.profile
 });
 
 export default connect(

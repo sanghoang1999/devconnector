@@ -95,6 +95,8 @@ export const login = ({ email, password }) => async dispatch => {
 
 export const logout = () => dispatch => {
   localStorage.removeItem("token");
-  dispatch({ type: CLEAR_PROFILE });
+  if (window.location.pathname.indexOf("/profile/") === -1) {
+    dispatch({ type: CLEAR_PROFILE });
+  }
   dispatch({ type: LOGOUT });
 };

@@ -2,14 +2,14 @@ import React from "react";
 import Spinner from "./Spinner";
 import PropTypes from "prop-types";
 
-const SubmitButton = ({ submited }) => {
+const SubmitButton = ({ submited, name }) => {
   return (
     <button
       className={`btn ${!submited ? " btn-primary" : ""}`}
       type="submit"
       disabled={submited ? "disabled" : ""}
     >
-      Login{"  "}
+      {" " + name}
       {submited && (
         <Spinner
           width={"20px"}

@@ -14,7 +14,8 @@ import CreateProfile from "./components/profile-form/CreateProfile";
 import EditProfile from "./components/profile-form/EditProfile";
 import AddExperience from "./components/profile-form/AddExperience";
 import Profiles from "./components/profiles/Profiles";
-import Profile from "./components/profiles/Profile";
+import Posts from "./components/posts/Posts";
+import Profile from "./components/profile/Profile";
 //Redux
 import { Provider } from "react-redux";
 import store from "./store";
@@ -26,9 +27,7 @@ if (localStorage.getItem("token")) {
 }
 function App() {
   useEffect(() => {
-    if (localStorage.getItem("token")) {
-      store.dispatch(loadUser());
-    }
+    store.dispatch(loadUser());
   }, []);
   return (
     <Provider store={store}>
@@ -59,11 +58,7 @@ function App() {
                 path="/add-experience"
                 component={AddExperience}
               />
-              <PrivateRoute
-                exact
-                path="/add-education"
-                component={AddEducation}
-              />
+              <PrivateRoute exact path="/posts" component={Posts} />
             </Switch>
           </section>
         </Fragment>

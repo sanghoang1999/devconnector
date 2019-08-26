@@ -27,6 +27,44 @@ router.get("/me", auth, async (req, res) => {
   }
 });
 
+// @route    Get api/profile
+// @desc     Get all profile
+// @access   Public
+
+router.get("/", async (req, res) => {
+  try {
+    const profiles = await Profile.find().populate("user", ["name", "avatar"]);
+    res.json(profiles);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json("Server Error");
+  }
+});
+
+// @route    Get api/profile/user/:user_id
+// @desc     Get profile by user_id
+// @access   Public
+
+router.get("/user/:user_id", async (req, res) => {
+  try {
+    const profile = await Profile.find({ user: req.params.user_id }).populate(
+      "user",
+      ["name", "avatar"]
+    );
+
+    if (!profile) {
+      return res.status(400).json({ msg: "Profile not found" });
+    }
+    res.json(profile);
+  } catch (error) {
+    console.log(error);
+    if (error.kind == "ObjectId") {
+      return res.status(400).json({ msg: "Profile not found" });
+    }
+    res.status(500).json("Server Error");
+  }
+});
+
 // @route    Post api/profile
 // @desc     Create or update profile
 // @access   Private
@@ -108,44 +146,6 @@ router.post(
     res.send(profileFileds);
   }
 );
-
-// @route    Get api/profile
-// @desc     Get all profile
-// @access   Public
-
-router.get("/", async (req, res) => {
-  try {
-    const profiles = await Profile.find().populate("user", ["name", "avatar"]);
-    res.json(profiles);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json("Server Error");
-  }
-});
-
-// @route    Get api/profile/user/:user_id
-// @desc     Get profile by user_id
-// @access   Public
-
-router.get("/user/:user_id", async (req, res) => {
-  try {
-    const profile = await Profile.find({ user: req.params.user_id }).populate(
-      "user",
-      ["name", "avatar"]
-    );
-
-    if (!profile) {
-      return res.status(400).json({ msg: "Profile not found" });
-    }
-    res.json(profile);
-  } catch (error) {
-    console.log(error);
-    if (error.kind == "ObjectId") {
-      return res.status(400).json({ msg: "Profile not found" });
-    }
-    res.status(500).json("Server Error");
-  }
-});
 
 // @route    Post api/profile
 // @desc     Delete profile, user & posts
@@ -344,8 +344,6 @@ router.get("/github/:username", (req, res) => {
       headers: { "user-agent": "node.js" }
     };
     request(options, (err, response, body) => {
-      console.log(response);
-      console.log(body);
       if (err) console.log(err);
       if (response.statusCode !== 200) {
         return res.status(400).json({ msg: "No github profile found" });

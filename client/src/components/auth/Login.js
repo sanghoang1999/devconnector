@@ -59,7 +59,7 @@ const Login = ({ login, isAuthenticated }) => {
             placeholder="Name"
           />
         </div>
-        <SubmitButton submited={submited} />
+        <SubmitButton name="Login" submited={submited} />
       </form>
       <p className="my-1">
         Don't have an account?
