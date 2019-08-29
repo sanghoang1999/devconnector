@@ -385,6 +385,9 @@ img {
   width: 100%;
 }
 
+.post-date {
+  font-size: 0.8rem;
+}
 .navbar {
   display: -webkit-box;
   display: -ms-flexbox;

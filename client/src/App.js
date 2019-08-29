@@ -21,6 +21,7 @@ import { Provider } from "react-redux";
 import store from "./store";
 import Dashboard from "./components/dashboard/Dashboard";
 import AddEducation from "./components/profile-form/AddEducation";
+import Post from "./components/post/Post";
 
 if (localStorage.getItem("token")) {
   setAuthToken(localStorage.getItem("token"));
@@ -59,6 +60,7 @@ function App() {
                 component={AddExperience}
               />
               <PrivateRoute exact path="/posts" component={Posts} />
+              <PrivateRoute exact path="/posts/:post_id" component={Post} />
             </Switch>
           </section>
         </Fragment>
