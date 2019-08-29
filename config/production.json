@@ -1,0 +1,6 @@
+{
+  "mongoURI": "mongodb+srv://sang:279782iluvu@devconnector-ld6u5.mongodb.net/test?retryWrites=true&w=majority",
+  "jwtSecret" :"emvuidi",
+  "githubClientId":"426fbd67c1391a6449cd",
+  "githubSecret":"905a9cbb27d00e3a5609098888c76f21703c2de9"
+}
