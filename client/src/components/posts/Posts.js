@@ -1,5 +1,4 @@
 import React, { Fragment, useEffect } from "react";
-import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { getPosts } from "../../actions/post";
 import Spinner from "../layout/Spinner";

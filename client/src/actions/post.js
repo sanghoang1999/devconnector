@@ -8,7 +8,8 @@ import {
   DELETE_POST,
   GET_POST,
   REMOVE_COMMENT,
-  ADD_COMMENT
+  ADD_COMMENT,
+  CLEAR_POST
 } from "../actions/types";
 
 export const getPosts = () => async dispatch => {
@@ -87,7 +88,7 @@ export const addPost = formData => async dispatch => {
 
 export const deletePost = (id, index) => async dispatch => {
   try {
-    const res = await axios.delete(`api/posts/${id}`);
+    await axios.delete(`api/posts/${id}`);
     dispatch({
       type: DELETE_POST,
       payload: { index: index }
@@ -104,6 +105,7 @@ export const deletePost = (id, index) => async dispatch => {
 //GET Post By Id
 
 export const getPost = id => async dispatch => {
+  dispatch({ type: CLEAR_POST });
   try {
     const res = await axios.get(`/api/posts/${id}`);
     dispatch({
@@ -149,9 +151,7 @@ export const addComment = (formData, post_id) => async dispatch => {
 
 export const deleteComment = (post_id, comment_id) => async dispatch => {
   try {
-    const res = await axios.delete(
-      `/api/posts/${post_id}/comment/${comment_id}`
-    );
+    await axios.delete(`/api/posts/${post_id}/comment/${comment_id}`);
     dispatch({
       type: REMOVE_COMMENT,
       payload: { comment_id: comment_id }

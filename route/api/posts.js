@@ -89,7 +89,6 @@ router.delete("/:post_id", auth, async (req, res) => {
       return res.status(404).json({ msg: "Post not found" });
     }
     //Check user
-    console.log(post.user);
     if (post.user.toString() !== req.user.id) {
       return res.status(401).json({ msg: "User not authorize" });
     }
@@ -112,7 +111,6 @@ router.delete("/:post_id", auth, async (req, res) => {
 router.put("/like/:id", auth, async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
-    console.log(post);
     //check if the post has already been liked
     if (
       post.likes.filter(like => like.user.toString() === req.user.id).length > 0
@@ -221,7 +219,7 @@ router.delete("/:post_id/comment/:comment_id", auth, async (req, res) => {
     }
     //Get remove index
     const indexToDel = post.comments
-      .map(item => item.user)
+      .map(item => item._id)
       .indexOf(req.params.comment_id);
 
     post.comments.splice(indexToDel, 1);

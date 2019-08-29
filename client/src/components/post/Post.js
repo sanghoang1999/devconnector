@@ -10,9 +10,8 @@ import CommentItem from "./CommentItem";
 
 const Post = ({ getPost, post: { post, loading }, match }) => {
   useEffect(() => {
-    console.log(match.params.post_id);
     getPost(match.params.post_id);
-  }, [getPost]);
+  }, [getPost, match.params.post_id]);
 
   return loading || post === null ? (
     <Spinner width="50px" margin="auto" display="block" />
@@ -28,11 +27,7 @@ const Post = ({ getPost, post: { post, loading }, match }) => {
       <div className="posts">
         {post.comments.length > 0 &&
           post.comments.map(cmt => (
-            <CommentItem
-              postId={match.params.post_id}
-              key={cmt._id}
-              cmt={cmt}
-            />
+            <CommentItem postId={post._id} key={cmt._id} cmt={cmt} />
           ))}
       </div>
     </Fragment>

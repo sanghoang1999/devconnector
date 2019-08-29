@@ -13,7 +13,6 @@ const PostItem = ({
   showAction = true,
   post: { _id, name, avatar, text, user, likes, comments, date }
 }) => {
-  console.log(date);
   return (
     !auth.loading && (
       <div className="post bg-white my-1 p-1">

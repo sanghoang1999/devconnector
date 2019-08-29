@@ -112,7 +112,6 @@ router.post(
     if (skills) {
       profileFileds.skills = skills.split(",").map(skill => skill.trim());
     }
-    console.log(skills);
 
     //Build social object
     profileFileds.social = {};
@@ -331,7 +330,6 @@ router.delete("/education/:edu_id", auth, async (req, res) => {
 // @access   Public
 
 router.get("/github/:username", (req, res) => {
-  console.log(req.params.username);
   try {
     const options = {
       uri: `https://api.github.com/users/${

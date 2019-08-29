@@ -14,7 +14,6 @@ const Login = ({ login, isAuthenticated }) => {
   if (localStorage.getItem("token")) {
     return <Redirect to="/dashboard" />;
   }
-  console.log("emvuidi");
   const { email, password } = formData;
   const onChange = e => {
     setFormData({ ...formData, [e.target.name]: e.target.value });

@@ -9,7 +9,7 @@ const SubmitButton = ({ submited, name }) => {
       type="submit"
       disabled={submited ? "disabled" : ""}
     >
-      {" " + name}
+      {" " + name}{" "}
       {submited && (
         <Spinner
           width={"20px"}

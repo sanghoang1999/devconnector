@@ -6,7 +6,7 @@ import Spinner from "../layout/Spinner";
 const ProfileGithub = ({ repos, getGithubRepos, username }) => {
   useEffect(() => {
     getGithubRepos(username);
-  }, [getGithubRepos]);
+  }, [getGithubRepos, username]);
   return repos == null ? (
     <Spinner width="50px" margin="auto" display="block" />
   ) : (
