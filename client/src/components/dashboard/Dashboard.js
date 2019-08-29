@@ -17,7 +17,7 @@ const Dashboard = ({
   useEffect(() => {
     getCurrentProfile();
   }, [getCurrentProfile]);
-  return loading || profile === null ? (
+  return loading ? (
     <Spinner width={"50px"} display={"block"} margin={"auto"} />
   ) : (
     <Fragment>
