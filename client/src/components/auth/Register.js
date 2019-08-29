@@ -68,7 +68,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
             name="password"
             value={password}
             onChange={e => onChange(e)}
-            placeholder="Name"
+            placeholder="Password"
           />
         </div>
         <div className="form-group">
